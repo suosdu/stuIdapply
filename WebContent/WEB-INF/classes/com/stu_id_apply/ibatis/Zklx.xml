@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Zklx">
+    <typeAlias alias="Zklx" type="com.stu_id_apply.vo.Zklx"/>
+
+    <select id="select"  parameterClass="Zklx" resultClass="Zklx">
+        SELECT * FROM ykt.t_bzxt_zklx
+        	<dynamic prepend="WHERE"> 
+                <isNotNull property="zklxh" prepend="AND">
+                    zklxh=#zklxh#
+                </isNotNull>               
+       	 	</dynamic>
+    </select>   
+</sqlMap>

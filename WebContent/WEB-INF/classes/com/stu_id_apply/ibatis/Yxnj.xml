@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="Yxnj">
+    <typeAlias alias="Yxnj" type="com.stu_id_apply.vo.Yxnj"/>
+    
+    <select id="select" parameterClass="Yxnj" resultClass="Yxnj">
+    	SELECT * FROM ykt.t_bzxt_yxnj
+		<dynamic prepend="WHERE"> 
+            <isNotNull property="nj" prepend="AND">
+                nj=#nj#
+            </isNotNull>
+   	 	</dynamic>
+    </select>
+    
+    <insert id="insert" parameterClass="java.lang.String">
+    	INSERT INTO ykt.t_bzxt_yxnj VALUES(#nj#)
+    </insert>
+    
+    <delete id="delete" parameterClass="java.lang.String">
+    	DELETE FROM ykt.t_bzxt_yxnj WHERE nj=#nj#
+    </delete>
+</sqlMap>

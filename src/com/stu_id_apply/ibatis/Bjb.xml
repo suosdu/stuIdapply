@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Bjb">
+	<typeAlias alias="Bjb" type="com.stu_id_apply.vo.Bjb"/>
+	
+	<select id="select" parameterClass="Bjb" resultClass="Bjb">
+		SELECT * FROM ykt.sn_jwc_code_bjb WHERE xsh=#xsh# AND zyh=#zyh# ORDER BY bm DESC
+	</select>
+</sqlMap>

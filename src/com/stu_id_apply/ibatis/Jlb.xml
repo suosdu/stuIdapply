@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Jlb">
+    <typeAlias alias="Jlb" type="com.stu_id_apply.vo.Jlb"/>
+	
+    <select id="select"  parameterClass="Jlb" resultClass="Jlb">
+        SELECT * FROM ykt.t_bzxt_jlb
+        	<dynamic prepend="WHERE"> 
+                <isNotNull property="xh" prepend="AND">
+                    xh=#xh#
+                </isNotNull>   
+            	<isNotNull property="jllx" prepend="AND">
+                    jllx=#jllx#
+                </isNotNull> 
+                <isNotNull property="dqzt" prepend="AND">
+                    dqzt=#dqzt#
+                </isNotNull>
+                <isNotNull property="zklxh" prepend="AND">
+                    zklxh=#zklxh#
+                </isNotNull>             
+       	 	</dynamic>
+       	 	ORDER BY sqrq DESC,xh,zklxh
+    </select>  
+    
+    <select id="select_num" parameterClass="Jlb" resultClass="java.lang.Integer">
+    	 SELECT COUNT(*) FROM ykt.t_bzxt_jlb
+        	<dynamic prepend="WHERE"> 
+                <isNotNull property="xh" prepend="AND">
+                    xh=#xh#
+                </isNotNull>   
+            	<isNotNull property="jllx" prepend="AND">
+                    jllx=#jllx#
+                </isNotNull> 
+                <isNotNull property="dqzt" prepend="AND">
+                    dqzt=#dqzt#
+                </isNotNull>
+                <isNotNull property="zklxh" prepend="AND">
+                    zklxh=#zklxh#
+                </isNotNull>
+       	 	</dynamic>
+    </select>
+    
+    <select id="join_select" parameterClass="java.lang.String" resultClass="Jlb">
+    	SELECT xj.xh, xj.xm, xj.sfzh, xj.xb, zy.zym as zy, xs.xsm as xy, xj.ssnj  FROM ykt.sn_jwc_code_xsb xs,ykt.sn_jwc_code_zyb zy,ykt.sn_jwc_xj_xjb xj 
+		WHERE	xj.xsh=xs.xsh AND xj.xsh=zy.xsh AND xj.zyh=zy.zyh AND xj.xh=#xh#
+    </select>
+    
+    <insert id="insert" parameterClass="Jlb">
+    	INSERT INTO ykt.t_bzxt_jlb(xh,zklxh,zklx,sqrq,dqzt,jllx,xb,sfzh,zy,ssnj,yxq_ks,yxq_jz,qsz,zdz,xm,xy) VALUES
+    	(#xh#,#zklxh#,#zklx#,#sqrq#,#dqzt#,#jllx#,#xb#,#sfzh#,#zy#,#ssnj#,#yxq_ks#,#yxq_jz#,#qsz#,#zdz#,#xm#,#xy#)
+    </insert>
+    
+    <update id="update_status" parameterClass="Jlb">
+    	UPDATE ykt.t_bzxt_jlb SET dqzt=#dqzt2# 
+    	 <isNotNull property="qkrq" prepend=",">
+			qkrq = #qkrq#
+		 </isNotNull>	
+    	WHERE jllx=1 
+         <isNotNull property="xh" prepend="AND">
+             xh=#xh#
+         </isNotNull>
+         <isNotNull property="dqzt" prepend="AND">
+         	dqzt=#dqzt# 
+         </isNotNull>
+		 <isNotNull property="zklxh" prepend="AND">
+			zklxh=#zklxh#
+		 </isNotNull>  
+    </update>
+    
+<!--    <update id="updateIssue" parameterClass="Jlb">-->
+<!--    	UPDATE ykt.t_bzxt_jlb SET dqzt=3 WHERE jllx=1 AND xh=#xh# AND dqzt=2 AND zklxh=#zklxh# -->
+<!--    </update>-->
+</sqlMap>

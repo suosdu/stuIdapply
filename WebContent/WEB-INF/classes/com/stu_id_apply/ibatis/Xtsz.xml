@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Xtsz">
+    <typeAlias alias="Xtsz" type="com.stu_id_apply.vo.Xtsz"/>
+
+    <select id="select"  parameterClass="Xtsz" resultClass="Xtsz">
+        SELECT * FROM ykt.t_bzxt_xtsz WHERE  paramname=#paramname#
+    </select>   
+    
+    <update id="update"  parameterClass="Xtsz">
+    	UPDATE ykt.t_bzxt_xtsz SET 	status=#status# WHERE paramname=#paramname#
+    </update>
+</sqlMap>

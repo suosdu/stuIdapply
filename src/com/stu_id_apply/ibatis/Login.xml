@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Login">
+    <typeAlias alias="Login" type="com.stu_id_apply.vo.Login"/>
+	
+    <select id="select"  parameterClass="Login" resultClass="Login">
+        SELECT * FROM ykt.login WHERE username=#username# AND system LIKE  '%'||#system#||'%'
+    </select>   
+</sqlMap>

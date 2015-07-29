@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="TJwcXjZpb">
+    <typeAlias alias="TJwcXjZpb" type="com.stu_id_apply.vo.TJwcXjZpb"/>
+	
+    <select id="select"  parameterClass="TJwcXjZpb" resultClass="TJwcXjZpb">
+        SELECT * FROM ykt.t_jwc_xj_zpb WHERE xh=#xh#
+    </select>   
+</sqlMap>

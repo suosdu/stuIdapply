@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+        
+<struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.devMode" value="false" />
+	
+	<package name="mypackage" namespace="" extends="json-default">
+	
+		<!-- 自定义拦截器 -->
+		<interceptors>
+			<interceptor name="logon" class="com.stu_id_apply.interceptor.LoginInterceptor" />
+		<!-- 自定义拦截器堆栈 --> 
+			<interceptor-stack name="myStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="logon" />
+			</interceptor-stack>
+		</interceptors>
+
+		<!-- 重定义默认拦截器堆栈 -->
+		<default-interceptor-ref name="myStack" />
+		<global-results>
+			<result name="login" type="redirect">login.action
+			</result>
+		</global-results>
+
+		
+		
+		<!-- 登录 -->
+		<action name="login" class="com.stu_id_apply.action.LoginAction" method="login">			
+			<result name="adminLogin">/jsp/MainAdmin.jsp</result>
+			<result name="role1Login">/jsp/MainStu.jsp</result>
+			<result name="input">/jsp/message.jsp</result>
+		</action>
+
+<!--=======================以下为学生操作=======================-->	
+	<!-- 显示学生主页面 -->
+		<action name="showMainInfo" class="com.stu_id_apply.action.StuAction" method="showMainInfo">
+			<result name="success">/jsp/New.jsp</result>
+		</action>	
+		
+		<action name="readPhoto" class="com.stu_id_apply.action.StuAction" method="readPhoto">
+		</action>
+		
+		<!-- 点击确认申请 -->
+		<action name="apply" class="com.stu_id_apply.action.StuAction" method="apply">
+			<result name="success">/jsp/message.jsp</result>
+		</action>
+		
+	<!-- 历史记录 -->	
+		<action name="showHistory" class="com.stu_id_apply.action.StuAction" method="showHistory">
+			<result name="success">/jsp/stuHistory.jsp</result>
+		</action>	
+<!--======================= 以上为学生操作==========================-->	
+
+<!--======================= 以下为管理员操作========================-->
+	
+	<!-- 系统设置 （开启关闭） -->
+		<action name="showSystemInfo" class="com.stu_id_apply.action.AdminAction" method="showSystemInfo">
+			<result name="success">/jsp/systemSetting.jsp</result>
+		</action>
+		
+		<action name="changeStatus" class="com.stu_id_apply.action.AdminAction" method="changeStatus">
+			<result type="chain">showSystemInfo</result>
+		</action>	
+				
+        <action name="updateRide" class="com.stu_id_apply.action.ImportExcelAction"><!-- 导入乘车信息 -->
+<!--            <result name="success" type="chain">showSystemInfo</result>-->
+			<result name="success">/jsp/message.jsp</result>
+            <result name="input">/jsp/message.jsp</result>
+        </action>		
+	<!-- 申请名单管理 -->
+		<action name="showApplyList_ThisWeek" class="com.stu_id_apply.action.AdminAction" method="showThisWeek">
+			<result name="success">/jsp/applyListMag_this.jsp</result>
+		</action>
+		
+		<action name="showApplyList_LastWeek" class="com.stu_id_apply.action.AdminAction" method="showLastWeek">
+			<result name="success">/jsp/applyListMag_last.jsp</result>
+		</action>
+	
+		<action name="statistics" class="com.stu_id_apply.action.AdminAction" method="statistics">
+			<result type="chain">showApplyList_ThisWeek</result>
+		</action>
+		
+		<action name="getSysStatus" class="com.stu_id_apply.action.AdminAction" method="showSystemInfo">
+			<result type="json"></result>
+		</action>
+		
+		<action name="exportData" class="com.stu_id_apply.action.ExportAction" method="exportData">
+			<param name="inputPath">/download/</param>
+			<!-- 初始文件名 -->
+			<param name="fileName"></param>
+			<result name="success" type="stream">
+				<param name="contentType">application/vnd.ms-excel,charset=ISO8859-1</param>
+				<param name="inputName">inputStream</param>
+				<!--
+					使用经过转码的文件名作为下载文件名，downloadFileName属性 对应action类中的方法
+					getDownloadFileName()
+				-->
+				<param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+				<param name="bufferSize">1000000</param>
+			</result>
+		</action>
+		
+		<action name="exportPic" class="com.stu_id_apply.action.PictureZip">
+			<result name="error">/jsp/message.jsp</result>
+		</action>
+		
+		<!-- 生成发放名单 -->
+		<action name="generateIssue" class="com.stu_id_apply.action.AdminAction" method="generateIssue">
+			<result type="chain">showApplyList_LastWeek</result>
+		</action>
+		
+	<!-- 紧急补办管理 -->	
+		<!-- 搜该生记录 -->	
+		<action name="emergencySearch" class="com.stu_id_apply.action.AdminAction" method="emergencySearch">
+			<result name="success">/jsp/emergencyApply.jsp</result>
+		</action>
+		
+		<action name="emergencyIssue" class="com.stu_id_apply.action.AdminAction" method="emergencyIssue">
+			<result type="chain">emergencySearch</result>
+		</action>
+	<!-- 发放/拉黑操作 -->
+		<action name="showIssueList" class="com.stu_id_apply.action.AdminAction" method="showIssueList">
+			<result name="success">/jsp/issueList.jsp</result>
+		</action>
+		
+<!--		<action name="ensureIssue" class="com.stu_id_apply.action.AdminAction" method="ensureIssue">-->
+<!--			<result type="chain">showIssueList</result>-->
+<!--		</action>-->
+		
+		<action name="issueAll" class="com.stu_id_apply.action.AdminAction" method="issueAll">
+			<result type="chain">showIssueList</result>
+		</action>
+		
+<!--		<action name="insertIntoBlack" class="com.stu_id_apply.action.AdminAction" method="insertIntoBlack">-->
+<!--			<result type="chain">showIssueList</result>-->
+<!--		</action>-->
+		
+		<action name="blackAll" class="com.stu_id_apply.action.AdminAction" method="blackAll">
+			<result type="chain">showIssueList</result>
+		</action>
+		
+	<!-- 历史记录查看 -->	
+		<action name="showHisRecord" class="com.stu_id_apply.action.AdminAction" method="showHisRecord">
+			<result name="success">/jsp/historyMag.jsp</result>
+		</action>
+	<!-- 违约记录 -->
+		<action name="showBlackList" class="com.stu_id_apply.action.AdminAction" method="showBlackList">
+			<result name="success">/jsp/blackList.jsp</result>
+		</action>
+		
+		<action name="deleteBlcRecord" class="com.stu_id_apply.action.AdminAction" method="deleteBlcRecord">
+		<result type="chain">showBlackList</result>
+		</action>
+		
+	<!-- 乘车信息查询 修改 -->
+		<!--切换学院，显示专业  -->
+		<action name="showMajor" class="com.stu_id_apply.action.AdminAction" method="showMajor">
+			<result type="json"></result>
+		</action>
+		
+		<action name="showClass" class="com.stu_id_apply.action.AdminAction" method="showClass">
+			<result type="json"></result>
+		</action>
+		<action name="updateCcxx" class="com.stu_id_apply.action.AdminAction" method="updateCcxx">
+			<result type="json"></result>
+		</action>
+		
+		<action name="deleteCcxx" class="com.stu_id_apply.action.AdminAction" method="deleteCcxx">
+			<result type="chain">showSystemInfo</result>
+		</action>
+	<!-- 允许年级管理 -->
+		<action name="deleteYxnj" class="com.stu_id_apply.action.AdminAction" method="deleteYxnj">
+			<result type="chain">showSystemInfo</result>
+		</action>
+		<action name="addYxnj" class="com.stu_id_apply.action.AdminAction" method="addYxnj">
+			<result type="chain">showSystemInfo</result>
+		</action>
+<!--======================== 以上为管理员操作=======================-->
+	</package>
+</struts>

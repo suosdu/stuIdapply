@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Hmd">
+	<typeAlias alias="Hmd" type="com.stu_id_apply.vo.Hmd"/>
+	
+	<select id="select"  resultClass="Hmd">
+		SELECT * FROM ykt.t_bzxt_hmd
+	</select>
+	
+	<insert id="insert" parameterClass="Hmd">
+		INSERT INTO ykt.t_bzxt_hmd VALUES(#xh#,#zklxh#,#zklx#,#sqrq#,#lhrq#,#xm#)
+	</insert>
+	<delete id="delete" parameterClass="Hmd">
+		DELETE FROM ykt.t_bzxt_hmd WHERE xh=#xh# AND zklxh=#zklxh#
+	</delete>
+</sqlMap>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+    
+<sqlMap namespace="Zyb">
+	<typeAlias alias="Zyb" type="com.stu_id_apply.vo.Zyb"/>
+	
+	<select id="select" parameterClass="Zyb" resultClass="Zyb">
+		SELECT * FROM ykt.sn_jwc_code_zyb WHERE xsh=#xsh# ORDER BY zym
+	</select>
+</sqlMap>

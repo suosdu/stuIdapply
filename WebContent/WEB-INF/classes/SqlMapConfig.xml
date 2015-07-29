@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+    <settings
+        useStatementNamespaces="true"
+        enhancementEnabled="true"
+        lazyLoadingEnabled="true"
+        cacheModelsEnabled="true"/>
+        
+	<transactionManager type="JDBC">
+    	<property name="nestedTransactionAllowed" value="true" />
+    	<dataSource type="SIMPLE">
+    		<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver" />
+    		<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@202.194.40.14:1521:datacenter" />
+    		<property name="JDBC.Username" value="bzxt" />
+    		<property name="JDBC.Password" value="bzxt4j_wc" />
+    	</dataSource>
+    </transactionManager>
+
+	<sqlMap resource="com/stu_id_apply/ibatis/Xjb.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Login.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Xtsz.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Jlb.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Ccxxb.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/TJwcXjZpb.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Zklx.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Hmd.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Xsb.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Zyb.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Bjb.xml" />
+	<sqlMap resource="com/stu_id_apply/ibatis/Yxnj.xml" />
+</sqlMapConfig>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Ccxxb">
+    <typeAlias alias="Ccxxb" type="com.stu_id_apply.vo.Ccxxb"/>
+	
+    <select id="select"  parameterClass="Ccxxb" resultClass="Ccxxb">
+        SELECT * FROM ykt.t_bzxt_ccxxb
+			<dynamic prepend="WHERE"> 
+                <isNotNull property="xh" prepend="AND">
+                    xh=#xh#
+                </isNotNull>
+       	 	</dynamic>
+    </select>  
+    
+    <select id="join_select" parameterClass="Ccxxb" resultClass="Ccxxb">
+    	SELECT xjb.xh, xjb.xm, xsb.xsm as college, zyb.zym as major, xjb.bm, ccxxb.qsz, ccxxb.zdz
+    	FROM ykt.t_bzxt_ccxxb ccxxb,ykt.sn_jwc_xj_xjb xjb,ykt.sn_jwc_code_xsb xsb,ykt.sn_jwc_code_zyb zyb
+    	WHERE ccxxb.xh=xjb.xh AND xjb.xsh=xsb.xsh AND xjb.zyh=zyb.zyh
+    	<isNotEmpty property="xsh" prepend="AND">
+             xjb.xsh=#xsh# 
+        </isNotEmpty>       
+        <isNotEmpty property="zyh" prepend="AND">
+             xjb.zyh=#zyh#
+        </isNotEmpty>   	  	
+        <isNotEmpty property="bm" prepend="AND">
+             xjb.bm=#bm#
+        </isNotEmpty> 
+        <isNotEmpty property="xh" prepend="AND">
+             xjb.xh=#xh#
+        </isNotEmpty> 
+    </select>
+    
+    <procedure id="insertORupdate" parameterClass="Ccxxb">
+		{call mergeinto(#xh#,#qsz#,#zdz#,#czyh#)}
+    </procedure>
+    
+    <delete id="delete" parameterClass="Ccxxb">
+    	DELETE FROM ykt.t_bzxt_ccxxb WHERE xh=#xh#
+    </delete>
+</sqlMap>

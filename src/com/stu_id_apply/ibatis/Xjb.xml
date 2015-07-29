@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//iBATIS.apache.org//DTD SQL Map 2.0//EN"      
+    "http://iBATIS.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Xjb">
+    <typeAlias alias="Xjb" type="com.stu_id_apply.vo.Xjb"/>
+
+    <select id="selectByCategory"  parameterClass="Xjb" resultClass="Xjb">
+        SELECT * FROM ykt.sn_jwc_xj_xjb WHERE  xh=#xh# AND sfygjxj=#sfygjxj# AND sfyxj=#sfyxj#
+    </select>
+	
+	<select id="selectBm" parameterClass="java.lang.String" resultClass="java.lang.String">
+		SELECT bm FROM ykt.sn_jwc_xj_xjb WHERE xh=#xh#
+	</select>
+</sqlMap>
